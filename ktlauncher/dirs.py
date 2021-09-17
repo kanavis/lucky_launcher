@@ -23,7 +23,7 @@ class Dirs:
         self.MC_DIR = self.HOME_DIR / Path(self._wrap(settings.MC_DIR))
 
     def _wrap(self, s: str):
-        if not plat.is_windows:
+        if not plat.is_mac:
             s = '.' + s
         return s
 
