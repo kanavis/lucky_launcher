@@ -29,7 +29,7 @@ def download_pack(url: str, local_filename: str, prb_text: sg.Text, prb: sg.Prog
                 current_count += len(chunk)
                 prb.update(current_count=current_count)
                 percents = int(current_count * 100/max_val)
-                prb_text.update(f'Качаем модпак {percents}%')
+                prb_text.update(f'Качаем модпак {percents}% {current_count}/{max_val}')
 
 
 def unzip_pack(zip_path: str, target_path: str, prb_text: sg.Text, prb: sg.ProgressBar):
