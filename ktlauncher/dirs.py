@@ -55,6 +55,10 @@ class Dirs:
 
 def init_dirs():
     dirs = Dirs()
+    for attr in dir(dirs):
+        if attr[0] != attr[0].lower():
+            print('DIR {}: {}'.format(attr, getattr(dirs, attr)))
+
     if not os.path.exists(dirs.HOME_DIR):
         raise KTError('Home dir does not exist')
     if not os.path.exists(dirs.MY_DIR):
