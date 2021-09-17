@@ -7,7 +7,7 @@ import PySimpleGUI as sg
 
 from ktlauncher.dirs import get_res_path
 
-sg.theme('LightGray3')
+sg.theme('BlueMono')
 log = logging.getLogger('ktlauncher')
 
 
