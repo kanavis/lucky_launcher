@@ -3,6 +3,7 @@ from pathlib import Path
 
 from ktlauncher import settings
 from ktlauncher.exceptions import KTError, KTUserError
+from ktlauncher.platform import plat
 
 
 def get_res_path(res: str) -> Path:
@@ -16,14 +17,21 @@ def get_log_file(root_file: str):
 class Dirs:
     def __init__(self):
         self.HOME_DIR = self._home_dir()
-        self.MY_DIR = self.HOME_DIR / Path(settings.DIR_NAME)
+        self.MY_DIR = self.HOME_DIR / Path(self._wrap(settings.DIR_NAME))
         self.PACKS_DIR = self.MY_DIR / Path(settings.PACKS_DIR)
-        self.TLAUNCHER_DIR = self.HOME_DIR / Path(settings.TLAUNCHER_DIR)
-        self.MC_DIR = self.HOME_DIR / Path(settings.MC_DIR)
+        self.TLAUNCHER_DIR = self.HOME_DIR / Path(self._wrap(settings.TLAUNCHER_DIR))
+        self.MC_DIR = self.HOME_DIR / Path(self._wrap(settings.MC_DIR))
+
+    def _wrap(self, s: str):
+        if not plat.is_windows:
+            s = '.' + s
+        return s
 
     def _home_dir(self):
-        if os.name == 'nt':
+        if plat.is_windows:
             return Path(os.path.expandvars(r'%APPDATA%'))
+        elif plat.is_mac:
+            return Path(os.environ['HOME']) / Path(*settings.MAC_APP_PATH)
         else:
             return Path(os.environ['HOME'])
 
